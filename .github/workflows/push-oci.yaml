@@ -1,0 +1,52 @@
+name: Push OCI Artifact
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  push-oci:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      # 1. Authenticate to GCP using Workload Identity Federation
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v3
+        with:
+          token_format: 'access_token'
+          # REPLACE THESE WITH YOUR WORKLOADS WIF VALUES
+          workload_identity_provider: 'projects/PROJECT_NUMBER/locations/global/workloadIdentityPools/github-pool/providers/github-workloads-provider'
+          service_account: 'flux-github-actions@dev-sandbox-386907.iam.gserviceaccount.com'
+
+      # 2. Setup Flux CLI
+      - name: Setup Flux
+        uses: fluxcd/flux2/action@main
+
+      # 3. Authenticate Docker to Artifact Registry using the federated token
+      - name: Login to GAR
+        uses: docker/login-action@v3
+        with:
+          registry: us-central1-docker.pkg.dev
+          username: oauth2accesstoken
+          password: ${{ steps.auth.outputs.access_token }}
+
+      # 4. Push the exact snapshot of this repo into OCI
+      # Dev Environment pushes to the Dev GAR
+      - name: Push Dev OCI Artifact
+        run: |
+          flux push artifact oci://us-central1-docker.pkg.dev/dev-sandbox-386907/flux-manifests-dev/dev-env:${{ github.sha }} \
+            --path="." \
+            --source="${{ github.repositoryUrl }}" \
+            --revision="${{ github.ref_name }}/${{ github.sha }}"
+
+          # Also tag it as latest
+          flux tag artifact oci://us-central1-docker.pkg.dev/dev-sandbox-386907/flux-manifests-dev/dev-env:${{ github.sha }} \
+            --tag latest

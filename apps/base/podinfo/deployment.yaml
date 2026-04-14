@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podinfo
+spec:
+  minReadySeconds: 3
+  revisionHistoryLimit: 5
+  progressDeadlineSeconds: 60
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: podinfo
+  template:
+    metadata:
+      labels:
+        app: podinfo
+    spec:
+      containers:
+        - name: podinfod
+          image: ghcr.io/stefanprodan/podinfo:6.6.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 9898
+              protocol: TCP
+          livenessProbe:
+            exec:
+              command:
+                - podcli
+                - check
+                - liveness
+            initialDelaySeconds: 1
+            timeoutSeconds: 5
+          readinessProbe:
+            exec:
+              command:
+                - podcli
+                - check
+                - readiness
+            initialDelaySeconds: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 32Mi
