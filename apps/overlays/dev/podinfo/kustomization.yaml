@@ -9,5 +9,8 @@ resources:
 # for all resources imported from the base!
 namespace: podinfo
 
-commonLabels:
+labels:
   env: dev
+
+annotations:
+  tamir: washere
