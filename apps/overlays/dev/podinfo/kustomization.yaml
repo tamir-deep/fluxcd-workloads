@@ -5,9 +5,9 @@ kind: Kustomization
 resources:
   - ../../../base/podinfo
 
-# This instructs kustomize to inject "podinfo-dev" as the namespace
+# This instructs kustomize to inject "podinfo" as the namespace
 # for all resources imported from the base!
-namespace: podinfo-dev
+namespace: podinfo
 
 commonLabels:
   env: dev
