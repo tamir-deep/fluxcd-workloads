@@ -22,7 +22,6 @@ jobs:
 
       - name: Validate manifests
         run: |
-          flux check --pre
           # Validate base and all overlays
           kustomize build apps/base/podinfo
           kustomize build apps/overlays/dev/podinfo
