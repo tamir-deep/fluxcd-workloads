@@ -16,11 +16,12 @@ spec:
       - resources:
           namespaces:
           - kube-system
-          - gke-managed-system
+          - kube-public
+          - gmp-*
+          - gke-*
           - flux-system
           - flagger-system
           - kyverno
-          - gateway-system
     validate:
       message: "label 'app.kubernetes.io/name' is required"
       pattern:
