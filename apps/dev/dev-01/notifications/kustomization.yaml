@@ -5,7 +5,7 @@ resources:
 patches:
   - target:
       kind: Deployment
-      name: notifications
+      name: notifications-podinfo
     patch: |-
       - op: add
         path: /spec/template/spec/securityContext/runAsUser
