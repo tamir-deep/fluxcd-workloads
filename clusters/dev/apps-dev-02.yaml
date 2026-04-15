@@ -1,11 +1,11 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: apps
+  name: apps-dev-02
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./apps/overlays/dev
+  path: ./apps/dev/dev-02
   prune: true
   sourceRef:
     kind: OCIRepository

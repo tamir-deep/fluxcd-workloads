@@ -22,9 +22,13 @@ jobs:
 
       - name: Validate manifests
         run: |
-          # Validate base and all overlays
-          kustomize build apps/base/podinfo
-          kustomize build apps/overlays/dev/podinfo
+          # Validate every app base and every rendered environment overlay
+          for base in apps/base/*; do
+            kustomize build "$base"
+          done
+          for overlay in apps/dev/dev-*; do
+            kustomize build "$overlay"
+          done
 
   push-oci:
     needs: validate
