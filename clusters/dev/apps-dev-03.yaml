@@ -11,5 +11,5 @@ spec:
     kind: OCIRepository
     name: flux-system
   dependsOn:
-    - name: infrastructure
+    - name: infrastructure-configs
   timeout: 1m0s
