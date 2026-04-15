@@ -4,7 +4,7 @@ metadata:
   name: gke-gateway
   namespace: flagger-system # Creating it in the controller namespace is fine for cluster-wide routing initially
 spec:
-  gatewayClassName: gke-l7-gxlb # Standard Cloud Load Balancer
+  gatewayClassName: gke-l7-regional-external-managed # Standard Cloud Load Balancer
   listeners:
   - name: http
     protocol: HTTP
