@@ -6,8 +6,6 @@ spec:
   parentRefs:
   - name: gke-gateway
     namespace: flagger-system  # points to our cluster Gateway
-  hostnames:
-  - "*"
   rules:
   - matches:
     - path:
