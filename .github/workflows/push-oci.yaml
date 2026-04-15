@@ -73,7 +73,7 @@ jobs:
             --path="." \
             --source="${{ github.repositoryUrl }}" \
             --revision="${{ github.ref_name }}/${{ github.sha }}" \
-            --ignore-paths=".github/,README.md,.gitignore"
+            --ignore-paths="clusters/prod/,clusters/staging/,.github/,README.md,.gitignore,GEMINI.md"
 
           # Also tag as 'latest' for the main branch push
           if [[ $GITHUB_REF == refs/heads/main ]]; then
