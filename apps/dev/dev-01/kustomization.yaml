@@ -3,11 +3,6 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - ../podinfo
-  - frontend
-  - catalog
-  - orders
-  - payments
-  - notifications
 namespace: dev-01
 labels:
   - pairs:
