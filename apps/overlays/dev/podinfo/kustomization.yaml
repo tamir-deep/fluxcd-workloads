@@ -10,7 +10,8 @@ resources:
 namespace: podinfo
 
 labels:
-  env: dev
+  - pairs:
+      app: podinfo
 
-annotations:
-  tamir: washere
+commonAnnotations:
+  tamir: was-here
