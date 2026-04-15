@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev-02
+  labels:
+    app.kubernetes.io/managed-by: flux
+    platform.fluxcd.io/lifecycle: ephemeral
+    platform.fluxcd.io/owner-scope: application
+    platform.fluxcd.io/environment: dev-02
+    platform.fluxcd.io/environment-type: development
